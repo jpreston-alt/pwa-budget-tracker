@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
+// creates a transaction document model using mongoose. transaction has a name, value and date
 const transactionSchema = new Schema(
   {
     name: {

@@ -1,6 +1,7 @@
 let transactions = [];
 let myChart;
 
+// when page loads - get all transactions from mongodb db
 fetch("/api/transaction")
   .then(response => {
     return response.json();
@@ -9,11 +10,13 @@ fetch("/api/transaction")
     // save db data on global variable
     transactions = data;
 
+    // render page using transactions variable
     populateTotal();
     populateTable();
     populateChart();
   });
 
+// calcuclate and render total transactions
 function populateTotal() {
   // reduce transaction amounts to a single total value
   let total = transactions.reduce((total, t) => {
@@ -24,6 +27,7 @@ function populateTotal() {
   totalEl.textContent = total;
 }
 
+// render table showing individual transactions
 function populateTable() {
   let tbody = document.querySelector("#tbody");
   tbody.innerHTML = "";
@@ -64,6 +68,7 @@ function populateChart() {
 
   let ctx = document.getElementById("myChart").getContext("2d");
 
+  // create chart using generated dates as labels and total budget amount when that label was created as data
   myChart = new Chart(ctx, {
     type: 'line',
       data: {
@@ -78,6 +83,7 @@ function populateChart() {
   });
 }
 
+// add a transaction
 function sendTransaction(isAdding) {
   let nameEl = document.querySelector("#t-name");
   let amountEl = document.querySelector("#t-amount");
@@ -112,7 +118,7 @@ function sendTransaction(isAdding) {
   populateTable();
   populateTotal();
   
-  // also send to server
+  // attempt to send to server
   fetch("/api/transaction", {
     method: "POST",
     body: JSON.stringify(transaction),
@@ -135,7 +141,7 @@ function sendTransaction(isAdding) {
     }
   })
   .catch(err => {
-    // fetch failed, so save in indexed db
+    // if fetch fails, save in indexed db
     saveRecord(transaction);
 
     // clear form
