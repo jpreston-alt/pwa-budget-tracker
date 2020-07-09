@@ -28,7 +28,7 @@ self.addEventListener("install", function (evt) {
 self.addEventListener("activate", function (evt) {
     evt.waitUntil(caches.keys().then(keyList => {
         keyList.map(key => {
-            if(key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
+            if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
                 console.log("Removing old cache data...", key);
                 return caches.delete(key);
             }
@@ -52,7 +52,7 @@ self.addEventListener("fetch", function (evt) {
                         return response;
                     })
                     .catch(err => {
-                        // if etwork request failed, try to get it from the cache.
+                        // if network request failed, try to get it from the cache.
                         return cache.match(evt.request);
                     });
             }).catch(err => console.log(err))
