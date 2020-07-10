@@ -123,7 +123,7 @@ function sendTransaction(isAdding) {
   populateTable();
   populateTotal();
 
-  // attempt to send to server
+  // attempt to send to server and add to MongoDB database
   fetch("/api/transaction", {
     method: "POST",
     body: JSON.stringify(transaction),
@@ -146,7 +146,7 @@ function sendTransaction(isAdding) {
       }
     })
     .catch(err => {
-      // if fetch fails, save in indexed db
+      // if fetch fails (no network connection), save in indexedDB pending object store
       saveRecord(transaction);
 
       // clear form
@@ -155,6 +155,7 @@ function sendTransaction(isAdding) {
     });
 }
 
+// add event listeners
 document.querySelector("#add-btn").onclick = function () {
   sendTransaction(true);
 };
