@@ -47,6 +47,8 @@ View deployed Heroku app [here](https://jp-pwa-budget.herokuapp.com/). <br>
 ## Directions for Future Development
 While this application does successfully allow for the user to add and view expenses while they're offline, I think it would be useful for them to be able to delete and update expenses as well. In the future I would do so using the same process as described in the [description](#description) above.
 
+When the deployed application is loaded for the first time in awhile, it takes a couple seconds for the transactions and budget data to be accessed from the Mongo database. Since this only happens the first time the app is loaded in awhile, I suspect it's because of Heroku and the way it unloads unused applications and data from server memory. However, the couple seconds it takes feels too slow and in the future I'd like to try and figure out a way to fix this.
+
 ## Questions
 ​If you have any questions about the repo, please contact me:
 
